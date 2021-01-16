@@ -15,12 +15,18 @@ function initValues() {
   launchDaySelector.setAttribute("value", today);
 }
 
-function loadLaunches() {
+const loadLaunches = async () => {
   // TODO: Once API is ready.
   // Load launches and sort by flight number.
-}
+  const response = await fetch("/launches");
+  const fetchedLaunches = await response.json();
+  launches = fetchedLaunches.sort((a, b) => {
+    return a.flightNumber < b.flightNumber;
+  });
+  return launches;
+};
 
-async function loadPlanets() {
+const loadPlanets = async () => {
   // TODO: Once API is ready.
   const planetSelector = document.getElementById("planets-selector");
 
@@ -31,7 +37,7 @@ async function loadPlanets() {
     planetSelector.innerHTML +=
       `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`;
   });
-}
+};
 
 function abortLaunch() {
   // TODO: Once API is ready.
