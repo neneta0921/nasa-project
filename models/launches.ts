@@ -44,8 +44,7 @@ export const downloadLaunchData = async () => {
     };
 
     launches.set(flightData.flightNumber, flightData);
-
-    log.info(JSON.stringify(flightData));
+    // log.info(JSON.stringify(flightData));
   }
 };
 
@@ -61,4 +60,14 @@ export const getOneLaunch = (id: number) => {
     return launches.get(id);
   }
   return null;
+};
+
+export const addOneLaunch = (data: Launch) => {
+  launches.set(
+    data.flightNumber,
+    Object.assign(data, {
+      upcoming: true,
+      customers: ["ZTM", "NASA"],
+    }),
+  );
 };
