@@ -39,9 +39,14 @@ const loadPlanets = async () => {
   });
 };
 
-const abortLaunch = () => {
+const abortLaunch = async (id) => {
   // TODO: Once API is ready.
   // Delete launch and reload launches.
+  const loadLaunches = await fetch(`/launches/${id}`, {
+    method: "delete",
+  });
+  listUpcoming();
+  return loadLaunches;
 };
 
 const submitLaunch = async () => {

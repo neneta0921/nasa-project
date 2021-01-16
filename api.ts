@@ -34,6 +34,13 @@ router.get("/launches/:id", (ctx) => {
   }
 });
 
+router.delete("/launches/:id", (ctx) => {
+  if (ctx.params?.id) {
+    const result = launches.removeOneLaunch(Number(ctx.params.id));
+    ctx.response.body = { success: result };
+  }
+});
+
 router.post("/launches", async (ctx) => {
   const body = await ctx.request.body().value;
 
