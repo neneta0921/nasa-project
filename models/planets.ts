@@ -8,6 +8,19 @@ type Planet = Record<string, string>;
 
 let planets: Array<Planet>;
 
+const filterHabitablePlanets = (planets: Array<Planet>) => {
+  return planets.filter((planet) => {
+    const planetaryRadius = Number(planet["koi_prad"]);
+    const stellarRadius = Number(planet["koi_srad"]);
+    const stellarMass = Number(planet["koi_smass"]);
+
+    return planet["koi_disposition"] === "CONFIRMED" &&
+      planetaryRadius > 0.5 && planetaryRadius < 1.5 &&
+      stellarRadius > 0.99 && stellarRadius < 1.01 &&
+      stellarMass > 0.78 && stellarMass < 1.04;
+  });
+};
+
 async function loadPlanetData() {
   const path = join("data", "kepler_exoplanets_nasa.csv");
   const file = await Deno.open(path);
@@ -18,16 +31,7 @@ async function loadPlanetData() {
   });
   Deno.close(file.rid);
 
-  const planets = (result as Array<Planet>).filter((planet) => {
-    const planetaryRadius = Number(planet["koi_prad"]);
-    const stellarRadius = Number(planet["koi_srad"]);
-    const stellarMass = Number(planet["koi_smass"]);
-
-    return planet["koi_disposition"] === "CONFIRMED" &&
-      planetaryRadius > 0.5 && planetaryRadius < 1.5 &&
-      stellarRadius > 0.99 && stellarRadius < 1.01 &&
-      stellarMass > 0.78 && stellarMass < 1.04;
-  });
+  const planets = filterHabitablePlanets(result as Array<Planet>);
 
   return planets.map((planet) => {
     return pick(planet, [
