@@ -1,10 +1,6 @@
-import * as log from "https://deno.land/std@0.83.0/log/mod.ts";
+import { BufReader, join, log, parse } from "../deps.ts";
 
-import { join } from "https://deno.land/std/path/mod.ts";
-import { parse } from "https://deno.land/std@0.83.0/encoding/csv.ts";
-import { BufReader } from "https://deno.land/std/io/bufio.ts";
-
-import { pick } from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
+// import { pick } from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
 
 type Planet = Record<string, string>;
 
@@ -35,16 +31,39 @@ const loadPlanetData = async () => {
 
   const planets = filterHabitablePlanets(result as Array<Planet>);
 
+  // return planets.map((planet) => {
+  //   return pick(planet, [
+  //     "kepler_name",
+  //     "koi_prad",
+  //     "koi_smass",
+  //     "koi_srad",
+  //     "koi_count",
+  //     "koi_steff",
+  //     "koi_period",
+  //   ]);
+  // });
+
   return planets.map((planet) => {
-    return pick(planet, [
-      "kepler_name",
-      "koi_prad",
-      "koi_smass",
-      "koi_srad",
-      "koi_count",
-      "koi_steff",
-      "koi_period",
-    ]);
+    const picked = ((
+      {
+        kepler_name,
+        koi_prad,
+        koi_smass,
+        koi_srad,
+        koi_count,
+        koi_steff,
+        koi_period,
+      },
+    ) => ({
+      kepler_name,
+      koi_prad,
+      koi_smass,
+      koi_srad,
+      koi_count,
+      koi_steff,
+      koi_period,
+    }))(planet);
+    return picked;
   });
 };
 
