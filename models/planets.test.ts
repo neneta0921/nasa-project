@@ -1,42 +1,73 @@
-/**
- * Deno includes:
- *
- * 1. The test runner in the CLI.
- * 2. Assertions in the standard library.
- * 3. Built-in test fixtures with Deno.test().
- */
-
 import {
   assertEquals,
   assertNotEquals,
 } from "https://deno.land/std@0.83.0/testing/asserts.ts";
 
-Deno.test("short example test", () => {
-  assertEquals("deno", "deno");
-  assertNotEquals({ runtime: "deno" }, { runtime: "node" });
-});
+import { filterHabitablePlanets } from "./planets.ts";
 
-Deno.test({
-  name: "long example test",
-  ignore: Deno.build.os === "windows",
-  fn() {
-    assertEquals("deno", "deno");
-    assertNotEquals({ runtime: "deno" }, { runtime: "node" });
-  },
-});
+const HABITABLE_PLANET = {
+  koi_disposition: "CONFIRMED",
+  koi_prad: "1",
+  koi_srad: "1",
+  koi_smass: "1",
+};
 
-Deno.test({
-  name: "ops leak",
-  sanitizeOps: false,
-  fn() {
-    setTimeout(console.log, 10000);
-  },
-});
+const NOT_CONFIRMED = {
+  koi_disposition: "FALSE POSITIVE",
+};
 
-Deno.test({
-  name: "resource leak",
-  sanitizeResources: false,
-  async fn() {
-    await Deno.open("./models/planets.ts");
-  },
+const TOO_LARGE_PLANET_RADIUS = {
+  koi_disposition: "CONFIRMED",
+  koi_prad: "1.5",
+  koi_srad: "1",
+  koi_smass: "1",
+};
+
+const TOO_LARGE_SOLAR_RADIUS = {
+  koi_disposition: "CONFIRMED",
+  koi_prad: "1",
+  koi_srad: "1.01",
+  koi_smass: "1",
+};
+
+const TOO_LARGE_SOLAR_MASS = {
+  koi_disposition: "CONFIRMED",
+  koi_prad: "1",
+  koi_srad: "1",
+  koi_smass: "1.04",
+};
+
+const TOO_SMALL_PLANET_RADIUS = {
+  koi_disposition: "CONFIRMED",
+  koi_prad: "0.5",
+  koi_srad: "1",
+  koi_smass: "1",
+};
+
+const TOO_SMALL_SOLAR_RADIUS = {
+  koi_disposition: "CONFIRMED",
+  koi_prad: "1",
+  koi_srad: "0.99",
+  koi_smass: "1",
+};
+
+const TOO_SMALL_SOLAR_MASS = {
+  koi_disposition: "CONFIRMED",
+  koi_prad: "1",
+  koi_srad: "1",
+  koi_smass: "0.78",
+};
+
+Deno.test("filter only habitable planets", () => {
+  const filtered = filterHabitablePlanets([
+    HABITABLE_PLANET,
+    NOT_CONFIRMED,
+    TOO_LARGE_PLANET_RADIUS,
+    TOO_LARGE_SOLAR_RADIUS,
+    TOO_LARGE_SOLAR_MASS,
+    TOO_SMALL_PLANET_RADIUS,
+    TOO_SMALL_SOLAR_RADIUS,
+    TOO_SMALL_SOLAR_MASS,
+  ]);
+  assertEquals(filtered, [HABITABLE_PLANET]);
 });

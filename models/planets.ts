@@ -8,7 +8,7 @@ type Planet = Record<string, string>;
 
 let planets: Array<Planet>;
 
-const filterHabitablePlanets = (planets: Array<Planet>) => {
+export const filterHabitablePlanets = (planets: Array<Planet>) => {
   return planets.filter((planet) => {
     const planetaryRadius = Number(planet["koi_prad"]);
     const stellarRadius = Number(planet["koi_srad"]);
