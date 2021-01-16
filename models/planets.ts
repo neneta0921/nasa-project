@@ -23,7 +23,7 @@ export const filterHabitablePlanets = (planets: Array<Planet>) => {
   });
 };
 
-async function loadPlanetData() {
+const loadPlanetData = async () => {
   const path = join("data", "kepler_exoplanets_nasa.csv");
   const file = await Deno.open(path);
   const bufReader = new BufReader(file);
@@ -46,11 +46,11 @@ async function loadPlanetData() {
       "koi_period",
     ]);
   });
-}
+};
 
 planets = await loadPlanetData();
 log.info(`${planets.length} habitable planets found!`);
 
-export function getAllPlanets() {
+export const getAllPlanets = () => {
   return planets;
-}
+};

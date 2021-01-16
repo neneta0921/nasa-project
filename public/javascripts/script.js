@@ -8,12 +8,12 @@ const rocketHeading = "Rocket".padEnd(22);
 const targetHeading = "Destination";
 const customersHeading = "Customers";
 
-function initValues() {
+const initValues = () => {
   const today = new Date().toISOString().split("T")[0];
   const launchDaySelector = document.getElementById("launch-day");
   launchDaySelector.setAttribute("min", today);
   launchDaySelector.setAttribute("value", today);
-}
+};
 
 const loadLaunches = async () => {
   // TODO: Once API is ready.
@@ -39,12 +39,12 @@ const loadPlanets = async () => {
   });
 };
 
-function abortLaunch() {
+const abortLaunch = () => {
   // TODO: Once API is ready.
   // Delete launch and reload launches.
-}
+};
 
-function submitLaunch() {
+const submitLaunch = () => {
   const target = document.getElementById("planets-selector").value;
   const launchDate = new Date(document.getElementById("launch-day").value);
   const mission = document.getElementById("mission-name").value;
@@ -66,9 +66,9 @@ function submitLaunch() {
   });
 
   document.getElementById("launch-success").hidden = false;
-}
+};
 
-function listUpcoming() {
+const listUpcoming = () => {
   const upcomingList = document.getElementById("upcoming-list");
   upcomingList.innerHTML =
     `<div class="list-heading">${numberHeading} ${dateHeading} ${missionHeading} ${rocketHeading} ${targetHeading}</div>`;
@@ -83,9 +83,9 @@ function listUpcoming() {
       upcomingList.innerHTML +=
         `<div class="list-item"><a class="delete" onclick="abortLaunch(${launch.flightNumber})">✖</a> ${flightNumber} <span class="silver">${launchDate}</span> ${mission} <span class="silver">${rocket}</span> <span class="gold">${target}</span></div>`;
     });
-}
+};
 
-function listHistory() {
+const listHistory = () => {
   const historyList = document.getElementById("history-list");
   historyList.innerHTML =
     `<div class="list-heading">${numberHeading} ${dateHeading} ${missionHeading} ${rocketHeading} ${customersHeading}</div>`;
@@ -103,9 +103,9 @@ function listHistory() {
       historyList.innerHTML +=
         `<div class="list-item">${success} ${flightNumber} <span class="silver">${launchDate}</span> ${mission} <span class="silver">${rocket}</span> ${customers}</div>`;
     });
-}
+};
 
-function navigate(navigateTo) {
+const navigate = (navigateTo) => {
   const pages = ["history", "upcoming", "launch"];
   document.getElementById(navigateTo).hidden = false;
   pages.filter((page) => page !== navigateTo).forEach((page) => {
@@ -120,7 +120,7 @@ function navigate(navigateTo) {
     loadLaunches();
     listHistory();
   }
-}
+};
 
 window.onload = () => {
   initValues();
