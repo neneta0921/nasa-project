@@ -1,3 +1,5 @@
+import * as log from "https://deno.land/std@0.83.0/log/mod.ts";
+
 import { join } from "https://deno.land/std/path/mod.ts";
 import { parse } from "https://deno.land/std@0.83.0/encoding/csv.ts";
 import { BufReader } from "https://deno.land/std/io/bufio.ts";
