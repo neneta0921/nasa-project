@@ -30,19 +30,6 @@ const loadPlanetData = async () => {
   Deno.close(file.rid);
 
   const planets = filterHabitablePlanets(result as Array<Planet>);
-
-  // return planets.map((planet) => {
-  //   return pick(planet, [
-  //     "kepler_name",
-  //     "koi_prad",
-  //     "koi_smass",
-  //     "koi_srad",
-  //     "koi_count",
-  //     "koi_steff",
-  //     "koi_period",
-  //   ]);
-  // });
-
   return planets.map((planet) => {
     const picked = ((
       {
