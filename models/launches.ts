@@ -1,4 +1,4 @@
-import { log } from "../deps.ts";
+import { log } from "../src/deps.ts";
 
 interface Launch {
   flightNumber: number;

@@ -1,6 +1,4 @@
-import { BufReader, join, log, parse } from "../deps.ts";
-
-// import { pick } from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
+import { BufReader, join, log, parse } from "../src/deps.ts";
 
 type Planet = Record<string, string>;
 
