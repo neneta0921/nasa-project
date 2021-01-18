@@ -44,7 +44,6 @@ export const downloadLaunchData = async () => {
     };
 
     launches.set(flightData.flightNumber, flightData);
-    // log.info(JSON.stringify(flightData));
   }
 };
 
